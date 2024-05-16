@@ -1,0 +1,50 @@
+#CadastroProfessor
+public class Professor {
+    private String nome;
+    private String departamento;
+    private String email;
+
+    public Professor(String nome, String matricula, String departamento, String email) {
+        this.nome = nome;
+        this.departamento = departamento;
+        this.email = email;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getMateria() {
+        return materia;
+    }
+
+    public void setMateria(String materia) {
+        this.materia = materia;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    @Override
+    public String toString() {
+        return "Professor{" +
+                "nome='" + nome + '\'' +
+                ", materia='" +materia + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        Professor professor = new Professor();
+        System.out.println(professor);
+    }
+}
