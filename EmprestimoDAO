@@ -1,0 +1,13 @@
+import java.util.ArrayList;
+import java.util.List;
+public class EmprestimoDAO {
+    private static List<Emprestimo> emprestimos = new ArrayList<>();
+
+    public void fazerEmprestimo(Emprestimo emprestimo) {
+        emprestimos.add(emprestimo);
+    }
+
+    public List<Emprestimo> listarEmprestimos() {
+        return emprestimos;
+    }
+}
