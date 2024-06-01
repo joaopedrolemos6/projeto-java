@@ -1,0 +1,19 @@
+import java.util.ArrayList;
+import java.util.List;
+
+public class PessoaDAO {
+    private static List<Pessoa> pessoas = new ArrayList<>();
+
+    public void cadastrarPessoa(Pessoa pessoa) {
+        pessoas.add(pessoa);
+    }
+
+    public Pessoa encontrarPessoaPorCpf(String cpf) {
+        for (Pessoa pessoa : pessoas) {
+            if (pessoa.getCpf().equals(cpf)) {
+                return pessoa;
+            }
+        }
+        return null;
+    }
+}
