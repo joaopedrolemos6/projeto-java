@@ -1,10 +1,10 @@
+import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 public class Main {
-    private static List<Pessoa> pessoas = new ArrayList<>();
-    private static List<Livro> livros = new ArrayList<>();
-    private static List<Emprestimo> emprestimos = new ArrayList<>();
+    private static PessoaDAO pessoaDAO = new PessoaDAO();
+    private static LivroDAO livroDAO = new LivroDAO();
+    private static EmprestimoDAO emprestimoDAO = new EmprestimoDAO();
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -70,7 +70,7 @@ public class Main {
         System.out.print("CPF do aluno: ");
         String cpf = scanner.nextLine();
         Aluno aluno = new Aluno(nome, cpf);
-        pessoas.add(aluno);
+        pessoaDAO.cadastrarPessoa(aluno);
         System.out.println("Aluno cadastrado com sucesso.");
     }
 
@@ -82,7 +82,7 @@ public class Main {
         System.out.print("Cargo do funcionario: ");
         String cargo = scanner.nextLine();
         Funcionario funcionario = new Funcionario(nome, cpf, cargo);
-        pessoas.add(funcionario);
+        pessoaDAO.cadastrarPessoa(funcionario);
         System.out.println("Funcionario cadastrado com sucesso.");
     }
 
@@ -92,14 +92,14 @@ public class Main {
         System.out.print("Autor do livro: ");
         String autor = scanner.nextLine();
         Livro livro = new Livro(titulo, autor);
-        livros.add(livro);
+        livroDAO.adicionarLivro(livro);
         System.out.println("Livro adicionado com sucesso.");
     }
 
     private static void fazerEmprestimo(Scanner scanner) {
         System.out.print("CPF da pessoa: ");
         String cpf = scanner.nextLine();
-        Pessoa pessoa = encontrarPessoaPorCpf(cpf);
+        Pessoa pessoa = pessoaDAO.encontrarPessoaPorCpf(cpf);
 
         if (pessoa == null) {
             System.out.println("Pessoa não encontrada.");
@@ -108,7 +108,7 @@ public class Main {
 
         System.out.print("Título do livro: ");
         String titulo = scanner.nextLine();
-        Livro livro = encontrarLivroPorTitulo(titulo);
+        Livro livro = livroDAO.encontrarLivroPorTitulo(titulo);
 
         if (livro == null) {
             System.out.println("Livro não encontrado.");
@@ -116,7 +116,7 @@ public class Main {
         }
 
         Emprestimo emprestimo = new Emprestimo(pessoa, livro);
-        emprestimos.add(emprestimo);
+        emprestimoDAO.fazerEmprestimo(emprestimo);
         System.out.println("Empréstimo realizado com sucesso.");
     }
 
@@ -127,7 +127,7 @@ public class Main {
     private static void calcularPassagemDeAno(Scanner scanner) {
         System.out.print("CPF do aluno: ");
         String cpf = scanner.nextLine();
-        Aluno aluno = (Aluno) encontrarPessoaPorCpf(cpf);
+        Aluno aluno = (Aluno) pessoaDAO.encontrarPessoaPorCpf(cpf);
 
         if (aluno == null) {
             System.out.println("Aluno não encontrado.");
@@ -153,6 +153,7 @@ public class Main {
     }
 
     private static void listarPessoas() {
+        List<Pessoa> pessoas = pessoaDAO.listarPessoas();
         if (pessoas.isEmpty()) {
             System.out.println("Nenhuma pessoa cadastrada.");
         } else {
@@ -163,6 +164,7 @@ public class Main {
     }
 
     private static void listarLivros() {
+        List<Livro> livros = livroDAO.listarLivros();
         if (livros.isEmpty()) {
             System.out.println("Nenhum livro cadastrado.");
         } else {
@@ -173,6 +175,7 @@ public class Main {
     }
 
     private static void listarEmprestimos() {
+        List<Emprestimo> emprestimos = emprestimoDAO.listarEmprestimos();
         if (emprestimos.isEmpty()) {
             System.out.println("Nenhum empréstimo realizado.");
         } else {
@@ -180,23 +183,5 @@ public class Main {
                 System.out.println(emprestimo);
             }
         }
-    }
-
-    private static Pessoa encontrarPessoaPorCpf(String cpf) {
-        for (Pessoa pessoa : pessoas) {
-            if (pessoa.getCpf().equals(cpf)) {
-                return pessoa;
-            }
-        }
-        return null;
-    }
-
-    private static Livro encontrarLivroPorTitulo(String titulo) {
-        for (Livro livro : livros) {
-            if (livro.getTitulo().equals(titulo)) {
-                return livro;
-            }
-        }
-        return null;
     }
 }

@@ -1,4 +1,4 @@
-import java.util.List;
+
 public class Emprestimo {
     private Pessoa pessoa;
     private Livro livro;
